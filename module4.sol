@@ -14,6 +14,7 @@ contract Module4 is ERC20{
     string[] DegenItems = ["Selection 1: Solana Token", "Selection 2: BitCoin Token", "Selection 3: Etherium Token"];
 
     mapping (address Wallet => uint DGN) public TokenBalance;
+    mapping(address wallet => mapping(string ReceiveToken => uint256 TokenAmount)) public TransactHistory;
 
     function Minting(address WalletAddress, uint256 DGN) public {
         require(WalletAddress == OwnerWalletAddress, "Only Owner can access");
@@ -50,12 +51,15 @@ contract Module4 is ERC20{
         if(choose == 1){
             require(TokenBalance[WalletAddress] >= 1500, "Account doesnt have enough DGN Token" );
             TokenBalance[WalletAddress] -= 1500;
+            TransactHistory[WalletAddress]["Solana"] += 1;
         }else if(choose == 2){
             require(TokenBalance[WalletAddress] >= 3000, "Account doesnt have enough DGN Token" );
             TokenBalance[WalletAddress] -= 3000;
+            TransactHistory[WalletAddress]["Bitcoin"] += 1;
         }else if(choose == 3){
             require(TokenBalance[WalletAddress] >= 5000, "Account doesnt have enough DGN Token" );
             TokenBalance[WalletAddress] -= 5000;
+            TransactHistory[WalletAddress]["Etherium"] += 1;
         }else{
             revert("Item not found, Choose 1, 2, 3 only!");
         }
